@@ -8,15 +8,15 @@ const BinaryConverter = () => {
   const [decimal, setDecimal] = useState<string>('');
   const [binary, setBinary] = useState<string>('');
   const [error, setError] = useState<string>('');
-  const [isDark, setIsDark] = useState<boolean>(false);
+  const [isDark, setIsDark] = useState<boolean>(false); // start in light mode
   const [copiedDecimal, setCopiedDecimal] = useState<boolean>(false);
   const [copiedBinary, setCopiedBinary] = useState<boolean>(false);
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const [swapped, setSwapped] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
 
+  // Ensure component only renders after mount to avoid hydration issues
   useEffect(() => {
-    setIsDark(false);
     setMounted(true);
   }, []);
 
@@ -66,7 +66,8 @@ const BinaryConverter = () => {
     setSwapped(prev => !prev);
   };
 
-  if (!mounted) return null; 
+  if (!mounted) return null; // avoid flashing and dark mode inversion on mobile Chrome
+
   return (
     <div className={`min-h-screen flex flex-col transition-colors duration-700 ${
       isDark ? 'bg-slate-950' : 'bg-gradient-to-br from-blue-200 via-white to-blue-200'
