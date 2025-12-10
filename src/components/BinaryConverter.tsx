@@ -8,7 +8,7 @@ const BinaryConverter = () => {
   const [decimal, setDecimal] = useState<string>('');
   const [binary, setBinary] = useState<string>('');
   const [error, setError] = useState<string>('');
-  const [isDark, setIsDark] = useState<boolean | null>(null); // start as null
+  const [isDark, setIsDark] = useState<boolean>(false);
   const [copiedDecimal, setCopiedDecimal] = useState<boolean>(false);
   const [copiedBinary, setCopiedBinary] = useState<boolean>(false);
   const [showInfo, setShowInfo] = useState<boolean>(false);
@@ -16,9 +16,7 @@ const BinaryConverter = () => {
   const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
-    // Detect prefers-color-scheme on first client render
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setIsDark(prefersDark ? true : false);
+    setIsDark(false);
     setMounted(true);
   }, []);
 
@@ -49,9 +47,13 @@ const BinaryConverter = () => {
   const copyToClipboard = async (text: string, type: 'decimal' | 'binary') => {
     try {
       await navigator.clipboard.writeText(text);
-      type === 'decimal' ? setCopiedDecimal(true) : setCopiedBinary(true);
+      type === 'decimal'
+        ? setCopiedDecimal(true)
+        : setCopiedBinary(true);
       setTimeout(() => {
-        type === 'decimal' ? setCopiedDecimal(false) : setCopiedBinary(false);
+        type === 'decimal'
+          ? setCopiedDecimal(false)
+          : setCopiedBinary(false);
       }, 2000);
     } catch (err) {
       console.error('Copy failed', err);
@@ -64,10 +66,9 @@ const BinaryConverter = () => {
     setSwapped(prev => !prev);
   };
 
-  if (!mounted || isDark === null) return null; // don't render until client
-
+  if (!mounted) return null; 
   return (
-    <div className={`min-h-[100dvh] flex flex-col transition-colors duration-700 ${
+    <div className={`min-h-screen flex flex-col transition-colors duration-700 ${
       isDark ? 'bg-slate-950' : 'bg-gradient-to-br from-blue-200 via-white to-blue-200'
     }`}>
       <Header
