@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowUpDown } from 'lucide-react';
 import InputField from './InputField';
 import Header from './Header';
@@ -13,6 +13,11 @@ const BinaryConverter = () => {
   const [copiedBinary, setCopiedBinary] = useState<boolean>(false);
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const [swapped, setSwapped] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<boolean>(false); // NEW
+
+  useEffect(() => {
+    setMounted(true); // Ensure client-side render to avoid flash
+  }, []);
 
   const handleBinaryChange = (value: string) => {
     const filtered = value.replace(/[^01]/g, '');
@@ -60,8 +65,10 @@ const BinaryConverter = () => {
     setSwapped(prev => !prev);
   };
 
+  if (!mounted) return null; // Prevent flash
+
   return (
-    <div className={`min-h-screen flex flex-col transition-colors duration-700 ${
+    <div className={`min-h-[100dvh] flex flex-col transition-colors duration-700 ${
       isDark ? 'bg-slate-950' : 'bg-gradient-to-br from-blue-200 via-white to-blue-200'
     }`}>
       <Header
@@ -72,7 +79,7 @@ const BinaryConverter = () => {
       />
 
       {showInfo && (
-        <div className={`relative z-10 transition-all duration-300 border-b ${
+        <div className={`relative z-10 transition-colors duration-300 border-b ${
           isDark
             ? 'bg-slate-800/90 backdrop-blur-xl border-slate-700'
             : 'bg-blue-50/90 backdrop-blur-xl border-blue-200'
@@ -103,7 +110,7 @@ const BinaryConverter = () => {
             </p>
           </div>
 
-          <div className={`rounded-3xl p-8 md:p-10 shadow-2xl border transition-all duration-700 ${
+          <div className={`rounded-3xl p-8 md:p-10 shadow-2xl border transition-colors duration-700 ${
             isDark
               ? 'bg-slate-900/60 backdrop-blur-xl border-slate-800 shadow-black/50'
               : 'bg-white/60 backdrop-blur-xl border-white/50 shadow-gray-400/20'
@@ -142,7 +149,7 @@ const BinaryConverter = () => {
             />
 
             {error && (
-              <div className={`mt-5 rounded-2xl p-4 border transition-all duration-300 ${
+              <div className={`mt-5 rounded-2xl p-4 border transition-colors duration-300 ${
                 isDark ? 'bg-red-950/30 border-red-900/50' : 'bg-red-50 border-red-200'
               }`}>
                 <p className={`text-sm font-medium ${isDark ? 'text-red-400' : 'text-red-600'}`}>
@@ -152,7 +159,7 @@ const BinaryConverter = () => {
             )}
 
             {binary && !error && decimal && (
-              <div className={`mt-5 rounded-2xl p-5 border transition-all duration-300 ${
+              <div className={`mt-5 rounded-2xl p-5 border transition-colors duration-300 ${
                 isDark
                   ? 'bg-gradient-to-r from-purple-950/30 to-indigo-950/30 border-purple-900/50'
                   : 'bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200'
