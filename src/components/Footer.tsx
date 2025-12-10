@@ -23,7 +23,8 @@ const Footer = ({ isDark }: FooterProps) => (
             className={`flex items-center gap-2 text-sm ${isDark ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}
           >
             <span>View on GitHub</span>
-            <Github className="w-4 h-4 text-black/80" />
+            <Github 
+              className={`w-4 h-4 text-black/80 ${ isDark ? 'text-gray-200' : 'text-gray-800'}`} />
           </a>
         </div>
       </div>

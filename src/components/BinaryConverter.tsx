@@ -18,7 +18,7 @@ const BinaryConverter = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
-  
+
   const handleTopFieldChange = (value: string) => {
     if (!swapped) {
       const filtered = value.replace(/[^0-9]/g, '');
@@ -125,13 +125,11 @@ const BinaryConverter = () => {
             </p>
           </div>
 
-
           <div className={`rounded-3xl p-8 md:p-10 shadow-2xl border transition-colors duration-700 ${
             isDark
               ? 'bg-slate-900/60 backdrop-blur-xl border-slate-800 shadow-black/50'
               : 'bg-white/60 backdrop-blur-xl border-white/50 shadow-gray-400/20'
           }`}>
-
             <InputField
               label={swapped ? 'Binary Number' : 'Decimal Number'}
               value={swapped ? binary : decimal}
@@ -195,11 +193,11 @@ const BinaryConverter = () => {
             )}
           </div>
         </div>
-
       </div>
 
       <Footer isDark={isDark} />
     </div>
   );
 };
+
 export default BinaryConverter;
