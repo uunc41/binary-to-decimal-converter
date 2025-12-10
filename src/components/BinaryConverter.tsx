@@ -8,13 +8,7 @@ const BinaryConverter = () => {
   const [decimal, setDecimal] = useState<string>('');
   const [binary, setBinary] = useState<string>('');
   const [error, setError] = useState<string>('');
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = window.localStorage.getItem('darkMode');
-      return saved ? JSON.parse(saved) : true;
-    }
-    return true;
-  });
+  const [isDark, setIsDark] = useState<boolean>(true); // always start dark
   const [copiedDecimal, setCopiedDecimal] = useState<boolean>(false);
   const [copiedBinary, setCopiedBinary] = useState<boolean>(false);
   const [showInfo, setShowInfo] = useState<boolean>(false);
@@ -24,12 +18,6 @@ const BinaryConverter = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  useEffect(() => {
-    if (mounted && typeof window !== 'undefined') {
-      window.localStorage.setItem('darkMode', JSON.stringify(isDark));
-    }
-  }, [isDark, mounted]);
 
   const handleTopFieldChange = (value: string) => {
     if (!swapped) {
