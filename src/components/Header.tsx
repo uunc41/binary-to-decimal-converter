@@ -1,5 +1,4 @@
-import React from 'react';
-import { Moon, Sun, Info } from 'lucide-react';
+import { Info, Moon, Sun } from 'lucide-react';
 
 interface HeaderProps {
   isDark: boolean;
@@ -8,7 +7,7 @@ interface HeaderProps {
   setShowInfo: (value: boolean) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ isDark, setIsDark, showInfo, setShowInfo }) => {
+const Header = ({ isDark, setIsDark, showInfo, setShowInfo }: HeaderProps) => {
   const toggleTheme = () => setIsDark(!isDark);
 
   return (
@@ -29,7 +28,6 @@ const Header: React.FC<HeaderProps> = ({ isDark, setIsDark, showInfo, setShowInf
           Binary to Decimal Converter
         </h1>
       </div>
-
       <div className="flex items-center gap-4">
         <button
           onClick={() => setShowInfo(!showInfo)}
@@ -37,7 +35,6 @@ const Header: React.FC<HeaderProps> = ({ isDark, setIsDark, showInfo, setShowInf
         >
           <Info className="w-5 h-5" />
         </button>
-
         <button
           onClick={toggleTheme}
           className={`relative w-20 h-10 rounded-full transition-all duration-500 ease-in-out flex items-center shadow-lg ${

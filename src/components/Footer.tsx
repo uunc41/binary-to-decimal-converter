@@ -1,11 +1,10 @@
-import React from 'react';
 import { Github } from 'lucide-react';
 
 interface FooterProps {
   isDark: boolean;
 }
 
-const Footer: React.FC<FooterProps> = ({ isDark }) => (
+const Footer = ({ isDark }: FooterProps) => (
   <footer className={`relative z-10 border-t transition-all duration-700 ${
     isDark
       ? 'bg-slate-900/70 backdrop-blur-xl border-slate-800'
@@ -18,13 +17,13 @@ const Footer: React.FC<FooterProps> = ({ isDark }) => (
         </p>
         <div className="flex items-center gap-4">
           <a
-            href="https://github.com/uunc41/Binary-to-Decimal-Converter"
+            href="https://github.com/uunc41/binary-to-decimal-converter"
             target="_blank"
             rel="noopener noreferrer"
             className={`flex items-center gap-2 text-sm ${isDark ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'}`}
           >
-            <Github className="w-4 h-4" />
             <span>View on GitHub</span>
+            <Github className="w-4 h-4 text-black/80" />
           </a>
         </div>
       </div>

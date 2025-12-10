@@ -1,100 +1,8 @@
 import { useState, useEffect } from 'react';
-import { ArrowUpDown, Copy, Check, Info } from 'lucide-react';
-
-interface InputFieldProps {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  placeholder: string;
-  isDark: boolean;
-  copied: boolean;
-  copyToClipboard: () => void;
-}
-
-const InputField = ({ label, value, onChange, placeholder, isDark, copied, copyToClipboard }: InputFieldProps) => (
-  <div className="mb-6">
-    <label className={`block text-sm font-semibold mb-3 transition-colors duration-300 ${
-      isDark ? 'text-gray-300' : 'text-gray-700'
-    }`}>
-      {label}
-    </label>
-    <div className="relative">
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        className={`w-full px-5 py-4 rounded-2xl text-lg font-mono transition-all duration-300 focus:outline-none focus:ring-2 ${
-          isDark
-            ? 'bg-slate-800 text-white border-2 border-slate-700 focus:ring-purple-500 focus:border-purple-500 placeholder-gray-500'
-            : 'bg-white text-gray-900 border-2 border-gray-200 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400'
-        }`}
-      />
-      {value && (
-        <button
-          onClick={copyToClipboard}
-          className={`absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-lg transition-all duration-200 ${
-            isDark
-              ? 'bg-slate-700 hover:bg-slate-600 text-gray-300'
-              : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
-          }`}
-        >
-          {copied ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
-        </button>
-      )}
-    </div>
-  </div>
-);
-
-const Header = ({ isDark, setIsDark, showInfo, setShowInfo }: any) => (
-  <header className={`sticky top-0 z-50 transition-colors duration-300 border-b backdrop-blur-xl ${
-    isDark
-      ? 'bg-slate-900/80 border-slate-800'
-      : 'bg-white/80 border-gray-200'
-  }`}>
-    <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 className={`text-2xl font-bold transition-colors duration-300 ${
-        isDark ? 'text-white' : 'text-gray-900'
-      }`}>
-        Binary Converter
-      </h1>
-      <div className="flex gap-3">
-        <button
-          onClick={() => setShowInfo(!showInfo)}
-          className={`p-2 rounded-xl transition-all duration-200 ${
-            isDark
-              ? 'bg-slate-800 hover:bg-slate-700 text-gray-300'
-              : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
-          }`}
-        >
-          <Info className="w-5 h-5" />
-        </button>
-        <button
-          onClick={() => setIsDark(!isDark)}
-          className={`p-1 rounded-xl transition-all px-3 text-2xl font-semibold duration-200 ${
-            isDark
-              ? 'bg-slate-800 hover:bg-slate-700 text-yellow-400'
-              : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
-          }`}
-        >
-          {isDark ? "0" : "1"}
-        </button>
-      </div>
-    </div>
-  </header>
-);
-
-const Footer = ({ isDark }: any) => (
-  <footer className={`py-6 transition-colors duration-300 border-t ${
-    isDark
-      ? 'bg-slate-900/50 border-slate-800 text-gray-400'
-      : 'bg-white/50 border-gray-200 text-gray-600'
-  }`}>
-    <div className="max-w-7xl mx-auto px-6 text-center text-sm">
-      <p>Made with React & TypeScript</p>
-    </div>
-  </footer>
-);
+import { ArrowUpDown } from 'lucide-react';
+import InputField from './InputField';
+import Header from './Header';
+import Footer from './Footer';
 
 const BinaryConverter = () => {
   const [decimal, setDecimal] = useState<string>('');
@@ -125,7 +33,6 @@ const BinaryConverter = () => {
 
   const handleTopFieldChange = (value: string) => {
     if (!swapped) {
-      // Top field is decimal, convert to binary
       const filtered = value.replace(/[^0-9]/g, '');
       setDecimal(filtered);
       setError('');
@@ -135,7 +42,6 @@ const BinaryConverter = () => {
       }
       setBinary(parseInt(filtered).toString(2));
     } else {
-      // Top field is binary, convert to decimal
       const filtered = value.replace(/[^01]/g, '');
       setBinary(filtered);
       setError('');
@@ -149,7 +55,6 @@ const BinaryConverter = () => {
 
   const handleBottomFieldChange = (value: string) => {
     if (!swapped) {
-      // Bottom field is binary, convert to decimal
       const filtered = value.replace(/[^01]/g, '');
       setBinary(filtered);
       setError('');
@@ -159,7 +64,6 @@ const BinaryConverter = () => {
       }
       setDecimal(parseInt(filtered, 2).toString());
     } else {
-      // Bottom field is decimal, convert to binary
       const filtered = value.replace(/[^0-9]/g, '');
       setDecimal(filtered);
       setError('');
