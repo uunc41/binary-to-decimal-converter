@@ -8,14 +8,13 @@ const BinaryConverter = () => {
   const [decimal, setDecimal] = useState<string>('');
   const [binary, setBinary] = useState<string>('');
   const [error, setError] = useState<string>('');
-  const [isDark, setIsDark] = useState<boolean>(false); // start in light mode
+  const [isDark, setIsDark] = useState<boolean>(false);
   const [copiedDecimal, setCopiedDecimal] = useState<boolean>(false);
   const [copiedBinary, setCopiedBinary] = useState<boolean>(false);
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const [swapped, setSwapped] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
 
-  // Ensure component only renders after mount to avoid hydration issues
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -47,13 +46,9 @@ const BinaryConverter = () => {
   const copyToClipboard = async (text: string, type: 'decimal' | 'binary') => {
     try {
       await navigator.clipboard.writeText(text);
-      type === 'decimal'
-        ? setCopiedDecimal(true)
-        : setCopiedBinary(true);
+      type === 'decimal' ? setCopiedDecimal(true) : setCopiedBinary(true);
       setTimeout(() => {
-        type === 'decimal'
-          ? setCopiedDecimal(false)
-          : setCopiedBinary(false);
+        type === 'decimal' ? setCopiedDecimal(false) : setCopiedBinary(false);
       }, 2000);
     } catch (err) {
       console.error('Copy failed', err);
@@ -66,7 +61,7 @@ const BinaryConverter = () => {
     setSwapped(prev => !prev);
   };
 
-  if (!mounted) return null; // avoid flashing and dark mode inversion on mobile Chrome
+  if (!mounted) return null;
 
   return (
     <div className={`min-h-screen flex flex-col transition-colors duration-700 ${
@@ -87,10 +82,10 @@ const BinaryConverter = () => {
         }`}>
           <div className="max-w-4xl mx-auto px-6 py-4">
             <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-              <strong>How it works:</strong> Binary is a number system that uses only the digits 0 and 1. 
-              Each digit represents a power of 2, which is why computers use it internally. 
-              To convert binary to decimal, each bit is multiplied by its corresponding power of 2 and the results are added together. 
-              To convert decimal to binary, the number is rewritten in base-2, which JavaScript handles automatically using built-in functions. 
+              <strong>How it works:</strong> Binary is a number system that uses only the digits 0 and 1.
+              Each digit represents a power of 2, which is why computers use it internally.
+              To convert binary to decimal, each bit is multiplied by its corresponding power of 2 and the results are added together.
+              To convert decimal to binary, the number is rewritten in base-2, which JavaScript handles automatically using built-in functions.
               This tool takes your input in either format, checks it for validity, and instantly converts it to the other number system.
             </p>
           </div>
@@ -101,8 +96,9 @@ const BinaryConverter = () => {
         <div className="max-w-2xl w-full">
           <div className="text-center mb-12">
             <h2 className={`text-5xl md:text-6xl font-bold mb-4 transition-colors duration-700 ${
-              isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400' 
-                      : 'text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600'
+              isDark
+                ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400'
+                : 'text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600'
             }`}>
               Convert Instantly
             </h2>
@@ -169,7 +165,8 @@ const BinaryConverter = () => {
                   Conversion Result
                 </p>
                 <p className={`text-base ${isDark ? 'text-gray-300' : 'text-gray-800'}`}>
-                  <span className="font-bold text-lg">{decimal}</span> (decimal) = <span className="font-mono font-bold text-lg">{binary}</span> (binary)
+                  <span className="font-bold text-lg">{decimal}</span> (decimal) ={' '}
+                  <span className="font-mono font-bold text-lg">{binary}</span> (binary)
                 </p>
                 <p className={`text-xs mt-2 ${isDark ? 'text-gray-500' : 'text-gray-600'}`}>
                   {binary.length} bits • Value range: 0 to {Math.pow(2, binary.length) - 1}
