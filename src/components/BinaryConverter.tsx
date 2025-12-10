@@ -61,7 +61,7 @@ const BinaryConverter = () => {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col transition-all duration-700 ${
+    <div className={`min-h-screen flex flex-col transition-colors duration-700 ${
       isDark ? 'bg-slate-950' : 'bg-gradient-to-br from-blue-200 via-white to-blue-200'
     }`}>
       <Header

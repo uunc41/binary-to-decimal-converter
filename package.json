@@ -2,7 +2,7 @@
   "name": "binary-to-decimal-converter",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://uunc41.github.io/Binary-to-Decimal-Converter/",
+  "homepage": "https://uunc41.github.io/binary-to-decimal-converter/",
   "dependencies": {
     "lucide-react": "^0.263.1",
     "react": "^18.2.0",
