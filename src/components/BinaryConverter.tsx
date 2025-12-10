@@ -77,7 +77,7 @@ const Header = ({ isDark, setIsDark, showInfo, setShowInfo }: any) => (
               : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
           }`}
         >
-          {isDark ? "0" : "1" }
+          {isDark ? "0" : "1"}
         </button>
       </div>
     </div>
@@ -103,9 +103,9 @@ const BinaryConverter = () => {
   const [isDark, setIsDark] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       const saved = window.localStorage.getItem('darkMode');
-      return saved ? JSON.parse(saved) : false;
+      return saved ? JSON.parse(saved) : true;
     }
-    return false;
+    return true;
   });
   const [copiedDecimal, setCopiedDecimal] = useState<boolean>(false);
   const [copiedBinary, setCopiedBinary] = useState<boolean>(false);
@@ -125,6 +125,7 @@ const BinaryConverter = () => {
 
   const handleTopFieldChange = (value: string) => {
     if (!swapped) {
+      // Top field is decimal, convert to binary
       const filtered = value.replace(/[^0-9]/g, '');
       setDecimal(filtered);
       setError('');
@@ -148,6 +149,7 @@ const BinaryConverter = () => {
 
   const handleBottomFieldChange = (value: string) => {
     if (!swapped) {
+      // Bottom field is binary, convert to decimal
       const filtered = value.replace(/[^01]/g, '');
       setBinary(filtered);
       setError('');
@@ -157,6 +159,7 @@ const BinaryConverter = () => {
       }
       setDecimal(parseInt(filtered, 2).toString());
     } else {
+      // Bottom field is decimal, convert to binary
       const filtered = value.replace(/[^0-9]/g, '');
       setDecimal(filtered);
       setError('');
