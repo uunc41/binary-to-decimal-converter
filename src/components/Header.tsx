@@ -9,7 +9,7 @@ interface HeaderProps {
 
 const Header = ({ isDark, setIsDark, showInfo, setShowInfo }: HeaderProps) => {
   const toggleTheme = () => setIsDark(!isDark);
-
+  
   return (
     <nav className={`relative z-10 w-full shadow-lg py-4 px-6 flex justify-between items-center border-b transition-all duration-700 ${
       isDark
