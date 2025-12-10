@@ -8,15 +8,18 @@ const BinaryConverter = () => {
   const [decimal, setDecimal] = useState<string>('');
   const [binary, setBinary] = useState<string>('');
   const [error, setError] = useState<string>('');
-  const [isDark, setIsDark] = useState<boolean>(false);
+  const [isDark, setIsDark] = useState<boolean | null>(null); // start as null
   const [copiedDecimal, setCopiedDecimal] = useState<boolean>(false);
   const [copiedBinary, setCopiedBinary] = useState<boolean>(false);
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const [swapped, setSwapped] = useState<boolean>(false);
-  const [mounted, setMounted] = useState<boolean>(false); // NEW
+  const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
-    setMounted(true); // Ensure client-side render to avoid flash
+    // Detect prefers-color-scheme on first client render
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setIsDark(prefersDark ? true : false);
+    setMounted(true);
   }, []);
 
   const handleBinaryChange = (value: string) => {
@@ -46,13 +49,9 @@ const BinaryConverter = () => {
   const copyToClipboard = async (text: string, type: 'decimal' | 'binary') => {
     try {
       await navigator.clipboard.writeText(text);
-      type === 'decimal'
-        ? setCopiedDecimal(true)
-        : setCopiedBinary(true);
+      type === 'decimal' ? setCopiedDecimal(true) : setCopiedBinary(true);
       setTimeout(() => {
-        type === 'decimal'
-          ? setCopiedDecimal(false)
-          : setCopiedBinary(false);
+        type === 'decimal' ? setCopiedDecimal(false) : setCopiedBinary(false);
       }, 2000);
     } catch (err) {
       console.error('Copy failed', err);
@@ -65,7 +64,7 @@ const BinaryConverter = () => {
     setSwapped(prev => !prev);
   };
 
-  if (!mounted) return null; // Prevent flash
+  if (!mounted || isDark === null) return null; // don't render until client
 
   return (
     <div className={`min-h-[100dvh] flex flex-col transition-colors duration-700 ${
